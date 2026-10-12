@@ -1,0 +1,13 @@
+# Non-secret configuration of the Registration Service.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: registration-config
+  namespace: aitu-sss
+data:
+  STORAGE_BACKEND: "postgres"
+  DB_HOST: "postgres.aitu-sss.svc.cluster.local"   # service discovery via cluster DNS
+  DB_PORT: "5432"
+  DB_CHECK_TIMEOUT_SECONDS: "1"
+  LOG_LEVEL: "INFO"
+  CHAOS_ENABLED: "true"    # lab only: enables POST /chaos/hang for the liveness demo

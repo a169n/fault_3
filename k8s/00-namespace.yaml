@@ -1,0 +1,8 @@
+# Namespace for the synthetic AITU Digital Student Services platform.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: aitu-sss
+  labels:
+    app.kubernetes.io/part-of: aitu-student-services
+    environment: education-lab

@@ -1,0 +1,9 @@
+# Local 3-node kind cluster: 1 control plane + 2 workers, so that the two
+# Registration replicas can be spread across different nodes (anti-affinity).
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: aitu
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
