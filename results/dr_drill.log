@@ -1,0 +1,9 @@
+[15:00:08] PostgreSQL: postgres (PostgreSQL) 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)   work dir: /var/tmp/aitu-dr-drill
+[15:00:09] initial data: 1000 synthetic registrations
+[15:00:09] A) pg_dump finished in 0.08 s, size 9915 bytes
+[15:00:09] B) pg_basebackup finished in 0.39 s
+[15:00:13] 250 more registrations written AFTER the backups -> total 1250; recovery target = 2026-10-12 15:00:13.769187+00
+[15:00:14] DISASTER: DROP TABLE registrations (human error). rows now: table missing
+[15:00:17] A) pg_restore finished in 0.13 s -> rows 1000 (lost 250 rows written in the 5.51 s after the dump)
+[15:00:18] B) PITR to '2026-10-12 15:00:13.769187+00' finished in 0.94 s -> rows 1250 (lost 0 rows; data loss window 1.03 s before the DROP)
+[15:00:18] SUMMARY | logical dump: RTO 0.13s, rows 1000/1250 | base backup + WAL PITR: RTO 0.94s, rows 1250/1250

@@ -1,0 +1,226 @@
+2026-10-12 14:55:55,811 INFO [registration-service-rrpjs-5ypy1] registration-service 1.0.0 listening on :18082 (storage=memory, db=127.0.0.1:18180)
+2026-10-12 14:56:10,873 INFO [registration-service-rrpjs-5ypy1] registration-service 1.0.0 listening on :18082 (storage=memory, db=127.0.0.1:18180)
+2026-10-12 14:56:28,929 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,029 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,129 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,232 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,330 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,430 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,531 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,631 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,731 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,832 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:29,932 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,032 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,134 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,233 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,334 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,434 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,534 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,635 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,736 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,836 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:30,937 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,036 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,139 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,240 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,338 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,438 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,539 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,638 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,739 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,839 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:31,939 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,039 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,140 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,240 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,341 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,441 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,542 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,642 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,742 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,843 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,943 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:32,947 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+2026-10-12 14:56:33,043 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,144 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,244 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,344 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,445 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,545 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,646 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,746 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,846 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:33,947 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,047 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,148 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,248 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,348 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,449 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,549 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,649 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,751 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,849 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:34,950 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,050 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,151 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,251 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,351 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,452 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,552 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,652 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,753 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,853 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:35,954 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,054 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,154 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,254 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,356 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,456 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,556 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,657 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,757 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,857 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:36,957 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,058 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,158 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,259 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,360 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,460 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,559 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,660 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,760 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,861 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,961 WARNING [registration-service-rrpjs-5ypy1] registration rejected, DB error: ConnectionRefusedError
+2026-10-12 14:56:37,970 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+2026-10-12 14:56:42,991 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 60654)
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 453, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 419, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+2026-10-12 14:56:48,014 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+2026-10-12 14:56:53,032 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+2026-10-12 14:56:58,051 WARNING [registration-service-rrpjs-5ypy1] DB check failed: ConnectionRefusedError
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 54914)
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 453, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 419, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+2026-10-12 14:57:09,104 ERROR [registration-service-rrpjs-5ypy1] CHAOS: liveness endpoint will now hang
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 33546)
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 451, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 439, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/home/user/fault_3/app/registration_service.py", line 210, in do_POST
+    return self._send(202, {"status": "liveness will hang"})
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/fault_3/app/registration_service.py", line 172, in _send
+    self.wfile.write(payload)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 33914)
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 453, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 419, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56782)
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 453, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 419, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/usr/lib/python3.13/socket.py", line 723, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+2026-10-12 14:57:37,151 INFO [registration-service-rrpjs-5ypy1] received signal 15, shutting down gracefully
+2026-10-12 14:57:37,649 INFO [registration-service-rrpjs-5ypy1] stopped
+2026-10-12 14:57:47,782 INFO [registration-service-rrpjs-5ypy1] registration-service 1.0.0 listening on :18082 (storage=memory, db=127.0.0.1:18180)
+2026-10-12 14:57:53,354 INFO [registration-service-rrpjs-5ypy1] received signal 15, shutting down gracefully
+2026-10-12 14:57:53,763 INFO [registration-service-rrpjs-5ypy1] stopped

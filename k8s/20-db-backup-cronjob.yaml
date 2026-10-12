@@ -1,0 +1,65 @@
+# Logical database backup every 5 minutes (Part E, RPO <= 5 min).
+# Lab-scale approach. In production use continuous WAL archiving
+# (pgBackRest / WAL-G / CloudNativePG barman) to object storage in another
+# zone, plus a daily full base backup.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-backups
+  namespace: aitu-sss
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: registration-db-backup
+  namespace: aitu-sss
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid          # never run two dumps at the same time
+  startingDeadlineSeconds: 120
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 240     # a dump must finish before the next slot
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: pg-dump
+              image: postgres:16-alpine
+              envFrom:
+                - secretRef:
+                    name: registration-db-credentials
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  TS=$(date -u +%Y%m%dT%H%M%SZ)
+                  export PGPASSWORD="$POSTGRES_PASSWORD"
+                  pg_dump -h postgres.aitu-sss.svc.cluster.local -U "$POSTGRES_USER" \
+                          -d "$POSTGRES_DB" -Fc -f "/backups/registration-$TS.dump"
+                  # keep the last 2 hours of 5-minute dumps (24 files)
+                  ls -1t /backups/registration-*.dump | tail -n +25 | xargs -r rm -f
+                  echo "backup ok: registration-$TS.dump"
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+              volumeMounts:
+                - name: backups
+                  mountPath: /backups
+          volumes:
+            - name: backups
+              persistentVolumeClaim:
+                claimName: db-backups

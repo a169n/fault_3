@@ -1,0 +1,43 @@
+### 2026-10-12T14:57:34Z readiness with DB up
+{"status": "ready", "instance": "registration-local-pg"}  -> HTTP 200
+### register 3 synthetic students
+{"id": "bab1ded3-79fa-4e90-b71d-007cc5c3f7aa", "student_id": "S0001", "course_code": "CC-301", "created_at": "2026-10-12T14:57:34.785+00:00", "served_by": "registration-local-pg"}  -> HTTP 201
+{"id": "a4024c79-a115-4e2b-805f-865e51554208", "student_id": "S0002", "course_code": "CC-301", "created_at": "2026-10-12T14:57:34.831+00:00", "served_by": "registration-local-pg"}  -> HTTP 201
+{"id": "d31ab019-b7a4-4093-8609-0e8876acacd7", "student_id": "S0003", "course_code": "CC-301", "created_at": "2026-10-12T14:57:34.884+00:00", "served_by": "registration-local-pg"}  -> HTTP 201
+### query S0002
+{"items": [{"id": "a4024c79-a115-4e2b-805f-865e51554208", "student_id": "S0002", "course_code": "CC-301", "created_at": "2026-10-12 14:57:34.831+00", "served_by": "registration-local-pg"}]}  -> HTTP 200
+### 2026-10-12T14:57:34Z STOP PostgreSQL (pg_ctl stop -m fast)
+### readiness with DB down
+{"status": "db-unavailable", "instance": "registration-local-pg"}  -> HTTP 503
+### liveness with DB down (must stay 200 -> no restart storm)
+{"status": "alive", "instance": "registration-local-pg"}  -> HTTP 200
+### register while DB down
+HTTP/1.1 503 Service Unavailable
+Server: aitu-registration/1.0.0 Python/3.13.16
+Date: Mon, 12 Oct 2026 14:57:35 GMT
+Content-Type: application/json
+Content-Length: 33
+X-Served-By: registration-local-pg
+Retry-After: 5
+
+{"error": "database unavailable"}  -> HTTP 503
+### 2026-10-12T14:57:35Z START PostgreSQL
+### readiness after DB restored (connection re-established automatically)
+{"status": "ready", "instance": "registration-local-pg"}  -> HTTP 200
+### register after recovery
+{"id": "ba944e9d-afa2-4b34-a648-36b18072f3f7", "student_id": "S0004", "course_code": "CC-301", "created_at": "2026-10-12T14:57:37.262+00:00", "served_by": "registration-local-pg"}  -> HTTP 201
+### rows in DB
+ student_id | course_code |       served_by       
+------------+-------------+-----------------------
+ S0001      | CC-301      | registration-local-pg
+ S0002      | CC-301      | registration-local-pg
+ S0003      | CC-301      | registration-local-pg
+ S0004      | CC-301      | registration-local-pg
+(4 rows)
+
+--- app log
+2026-10-12 14:57:33,836 INFO [registration-local-pg] registration-service 1.0.0 listening on :18190 (storage=postgres, db=127.0.0.1:55432)
+2026-10-12 14:57:35,074 WARNING [registration-local-pg] DB check failed: InterfaceError
+2026-10-12 14:57:35,093 WARNING [registration-local-pg] registration rejected, DB error: InterfaceError
+2026-10-12 14:57:37,336 INFO [registration-local-pg] received signal 15, shutting down gracefully
+2026-10-12 14:57:37,764 INFO [registration-local-pg] stopped

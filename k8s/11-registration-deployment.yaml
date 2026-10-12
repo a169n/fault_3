@@ -1,0 +1,145 @@
+# Registration Service - Deployment (Assignment 3, Part C)
+# Synthetic educational configuration. No real AITU endpoints or credentials.
+#
+# Resilience mechanisms in this file:
+#   replicas: 2                  -> redundancy, one replica can fail without outage
+#   readinessProbe               -> unhealthy replica is removed from the Service endpoints
+#   livenessProbe                -> hung process is restarted by the kubelet
+#   startupProbe                 -> liveness does not kill a slowly starting process
+#   resources requests/limits    -> guaranteed scheduling + protection from noisy neighbours
+#   RollingUpdate (maxUnavailable 0, maxSurge 1) -> zero-downtime deploys
+#   restartPolicy: Always        -> automatic restart of crashed containers
+#   anti-affinity / topology spread -> replicas land on different nodes
+#   preStop + terminationGracePeriodSeconds -> graceful shutdown, no dropped requests
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-service
+  namespace: aitu-sss
+  labels:
+    app: registration-service
+    app.kubernetes.io/part-of: aitu-student-services
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5          # allows `kubectl rollout undo` to recent versions
+  minReadySeconds: 5               # a new pod must stay ready 5s before it counts as available
+  progressDeadlineSeconds: 120     # a stuck rollout is reported as failed after 2 min
+  selector:
+    matchLabels:
+      app: registration-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0            # never go below 2 ready replicas during an update
+      maxSurge: 1                  # start 1 extra pod, then remove an old one
+  template:
+    metadata:
+      labels:
+        app: registration-service
+        version: "1.0.0"
+    spec:
+      restartPolicy: Always        # automatic restart (the only value allowed in a Deployment)
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    app: registration-service
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: registration-service
+      containers:
+        - name: registration
+          image: aitu-demo/registration-service:1.0.0   # built locally from app/Dockerfile
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: registration-config
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: APP_VERSION
+              value: "1.0.0"
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: registration-db-credentials
+                  key: POSTGRES_DB
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: registration-db-credentials
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: registration-db-credentials
+                  key: POSTGRES_PASSWORD
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          # Startup: up to 5 + 12*2 = 29 s to start before liveness takes over.
+          startupProbe:
+            httpGet:
+              path: /healthz/live
+              port: http
+            periodSeconds: 2
+            failureThreshold: 12
+          # Readiness (TUNED): default is period 10s x threshold 3 = ~30 s to detect.
+          # 5s x 2 = ~10 s, so a broken replica stops receiving traffic quickly
+          # while a single slow check (timeout) does not flap the endpoint.
+          readinessProbe:
+            httpGet:
+              path: /healthz/ready      # checks DB connectivity
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2
+            successThreshold: 1
+          # Liveness: does NOT check the DB, so a DB outage cannot cause a restart storm.
+          # A hung process is restarted after ~3 x 10 s = 30 s.
+          livenessProbe:
+            httpGet:
+              path: /healthz/live
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+          lifecycle:
+            preStop:
+              exec:
+                # Give kube-proxy / gateway time to remove this endpoint before SIGTERM.
+                command: ["sleep", "5"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
