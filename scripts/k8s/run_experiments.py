@@ -137,6 +137,9 @@ def experiment(n, args):
         log("FAULT: scale statefulset/postgres to 0")
         kubectl("scale", "statefulset/postgres", "--replicas=0")
         t_det, _ = wait_for(lambda k: k == 0, 120, "readiness removes all endpoints")
+    if t_det:
+        log(f"DETECTED after {t_det - t0:.2f} s")
+    if n == 3:
         remaining = args.db_outage - (time.time() - t0)
         if remaining > 0:
             time.sleep(remaining)
@@ -144,8 +147,6 @@ def experiment(n, args):
         t_db = time.time()
         kubectl("scale", "statefulset/postgres", "--replicas=1")
         res["db_restored_at_s"] = round(t_db - t0, 2)
-    if t_det:
-        log(f"DETECTED after {t_det - t0:.2f} s")
     t_rec, _ = wait_for(lambda k: k == 2, 300, "2 ready endpoints again")
     if t_rec:
         log(f"RECOVERED (2 ready endpoints) after {t_rec - t0:.2f} s")

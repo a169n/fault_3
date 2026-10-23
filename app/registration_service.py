@@ -2,8 +2,7 @@
 """Synthetic AITU Registration Service (educational, Assignment 3).
 
 A deliberately small HTTP service used to demonstrate Kubernetes resilience
-mechanisms. It has no third-party dependencies unless STORAGE_BACKEND=postgres
-is selected (then the pure-Python driver `pg8000` is required).
+mechanisms. Its only dependency is the pure-Python PostgreSQL driver `pg8000`.
 
 Endpoints
 ---------
@@ -42,7 +41,6 @@ DB_NAME = os.getenv("DB_NAME", "registration")
 DB_USER = os.getenv("DB_USER", "registration_app")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 DB_TIMEOUT = float(os.getenv("DB_CHECK_TIMEOUT_SECONDS", "1.0"))
-STORAGE_BACKEND = os.getenv("STORAGE_BACKEND", "memory")  # memory | postgres
 CHAOS_ENABLED = os.getenv("CHAOS_ENABLED", "false").lower() == "true"
 STARTUP_DELAY = float(os.getenv("STARTUP_DELAY_SECONDS", "0"))
 
@@ -59,30 +57,6 @@ def utc_now():
 
 
 # --------------------------------------------------------------------------- storage
-class MemoryStore:
-    """In-memory store; the DB is still checked over TCP so that the service
-    behaves like a DB-backed service when the DB is down (used by the local
-    simulator, where no PostgreSQL server is available)."""
-
-    def __init__(self):
-        self._rows = []
-        self._lock = threading.Lock()
-
-    def ping(self):
-        with socket.create_connection((DB_HOST, DB_PORT), timeout=DB_TIMEOUT):
-            return True
-
-    def add(self, row):
-        self.ping()
-        with self._lock:
-            self._rows.append(row)
-
-    def find(self, student_id):
-        self.ping()
-        with self._lock:
-            return [r for r in self._rows if r["student_id"] == student_id]
-
-
 class PostgresStore:
     def __init__(self):
         import pg8000.native  # noqa: F401  (imported lazily, optional dependency)
@@ -134,7 +108,7 @@ class PostgresStore:
         return [dict(zip(keys, r)) for r in rows]
 
 
-STORE = PostgresStore() if STORAGE_BACKEND == "postgres" else MemoryStore()
+STORE = PostgresStore()
 
 
 # --------------------------------------------------------------------------- state
@@ -247,8 +221,8 @@ def main():
 
     signal.signal(signal.SIGTERM, on_sigterm)
     signal.signal(signal.SIGINT, on_sigterm)
-    log.info("registration-service %s listening on :%d (storage=%s, db=%s:%d)",
-             VERSION, PORT, STORAGE_BACKEND, DB_HOST, DB_PORT)
+    log.info("registration-service %s listening on :%d (db=%s:%d)",
+             VERSION, PORT, DB_HOST, DB_PORT)
     httpd.serve_forever()
     log.info("stopped")
 

@@ -11,7 +11,7 @@ All data, endpoints and credentials are educational and made up.
 | Part A — architecture analysis, diagram | `docs/architecture.png` / `.svg`, table in the report (section 3.1) |
 | Part B — availability calculation | `scripts/availability.py` → `results/availability.md`, reliability block diagram `docs/rbd.png` |
 | Part C — Kubernetes YAML | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml` |
-| Part D — failure simulation | `scripts/simulate_failures.py` → `results/simulation_*`; on a real cluster: `scripts/k8s/run_experiments.py` |
+| Part D — failure experiments | `scripts/k8s/run_experiments.py` on a kind cluster → `results/k8s/<timestamp>/` |
 | Part E — RPO/RTO and DR | `docs/dr-plan.md`, `k8s/20-db-backup-cronjob.yaml`, `scripts/dr_drill.sh` → `results/dr_drill.log` |
 | Oral defense notes (Russian) | `docs/defense_notes_ru.md` |
 | The service itself | `app/registration_service.py` (Python, standard library only), `app/Dockerfile` |
@@ -20,7 +20,7 @@ All data, endpoints and credentials are educational and made up.
 app/        registration service and Dockerfile
 k8s/        manifests: namespace, secret, postgres, configmap, deployment, service, PDB, backup CronJob
 k8s/tools/  load generator (traffic for the cluster experiments)
-scripts/    calculations, simulator, DR drill, DOCX build, kind scripts
+scripts/    calculations, DR drill, DOCX build, kind cluster + experiment scripts
 docs/       diagrams, DR plan, defense notes
 results/    measured results and logs
 report/     the report
@@ -29,13 +29,14 @@ report/     the report
 ## Key results
 
 * **Part B.** End-to-end availability is **99.8417%**, so the 99.9% target is **not met**. The bottleneck is the single API Gateway (99.90%). With 2 gateways it becomes **99.9415%**; with 2 LBs and 2 gateways, 99.9915%.
-* **Part D (simulation).**
+* **Part D (kind cluster, `results/k8s/20261016T044320Z/`).**
 
   | Experiment | Detection | Recovery | User impact |
   |---|---|---|---|
-  | One replica fails | 0.92 s | 2.99 s | 9 of 120 requests failed |
-  | Both replicas fail | 0.95 s | 3.0 s to the first replica, 13 s to both | 60 requests failed |
-  | Database down for 30 s | 9.04 s | 4.2 s after the DB returned | 503 for the whole outage, 0 restarts |
+  | One replica fails | 0.14 s | 3.41 s | 0 of 37 requests failed |
+  | Both replicas fail | 0.13 s | 3.00 s | 1.25 s outage, 7 of 31 requests failed |
+  | Database down for 60 s | 9.92 s | 64.98 s (≈5 s after the DB returned) | unavailable for the whole outage, 0 restarts |
+  | One replica hangs (liveness) | ≈33 s | ≈40 s | none |
 
 * **Part E (DR drill).** After `DROP TABLE`, restoring from `pg_dump` recovered 1,000 of 1,250 rows, while point-in-time recovery (PITR) from the WAL archive recovered 1,250 of 1,250.
 
@@ -49,17 +50,7 @@ You need Python 3 (it comes with the Xcode Command Line Tools, or `brew install 
 python3 scripts/availability.py
 ```
 
-### 2. Failure simulation without Kubernetes (Part D), about 2 minutes
-
-```bash
-python3 scripts/simulate_failures.py            # all 4 experiments
-python3 scripts/simulate_failures.py --only 1 2 # selected experiments only
-```
-
-Results are written to `results/simulation_results.md`. To read the probe settings directly from the YAML, install PyYAML (`pip3 install pyyaml`). Without it the simulator uses the same values as defaults.
-**Run it yourself:** the "Individual work" section of the report requires your own run.
-
-### 3. Real Kubernetes on a Mac (kind)
+### 2. Failure experiments on Kubernetes (Part D, kind on a Mac)
 
 ```bash
 brew install kind kubectl          # plus Docker Desktop (or colima: brew install colima docker && colima start)
@@ -90,15 +81,15 @@ kubectl -n aitu-sss exec $POD -- python -c "import urllib.request as u; u.urlope
 kubectl -n aitu-sss get pods -w     # after ~30 s RESTARTS becomes 1
 ```
 
-### 4. DR drill (Part E), requires a local PostgreSQL
+### 3. DR drill (Part E), requires a local PostgreSQL
 
 ```bash
-brew install postgresql@16
-export PGBIN="$(brew --prefix postgresql@16)/bin"
+brew install postgresql@18
+export PGBIN="$(brew --prefix postgresql@18)/bin"
 bash scripts/dr_drill.sh           # log in results/dr_drill.log
 ```
 
-### 5. YAML validation and report build
+### 4. YAML validation and report build
 
 ```bash
 brew install kubeconform pandoc && pip3 install python-docx
@@ -108,15 +99,15 @@ python3 scripts/build_report_docx.py     # report/REPORT.md -> report/REPORT.doc
 
 ## How the results in `results/` were produced
 
-* Kubernetes could not run in the cloud sandbox where this project was prepared (nested containers are not supported there). Part D was therefore run with the **simulator** `scripts/simulate_failures.py`. It runs the real service code as two processes and emulates the kubelet: probes with the parameters from the YAML, restarts, CrashLoopBackOff. It also emulates Service load balancing over Ready pods and a database outage. The report states this openly as a limitation.
+* Part D was run on a local kind cluster (kind v0.33, Kubernetes v1.37, 1 control plane + 2 workers, Docker Desktop on macOS) with `scripts/k8s/run_experiments.py --db-outage 60`; experiment 4 (liveness) with the commands above, log in `liveness_hang.txt`.
 * The YAML was validated with `kubeconform` against the Kubernetes 1.31 schemas: 11 resources, 0 errors.
 * The service was tested separately against a real PostgreSQL 16 (`results/postgres_backend_check.log`). When the DB is down, readiness returns 503 while liveness stays 200; when the DB comes back, the connection is re-established automatically.
-* The DR drill was run on a real PostgreSQL 16 (`results/dr_drill.log`).
+* The DR drill was run on a local PostgreSQL 18 (`results/dr_drill.log`).
 
 ## To do before submission
 
 1. Complete every **[FILL IN]** in `report/REPORT.md`: name, ID, group, variant, dates, commit. Then rebuild the DOCX or edit `report/REPORT.docx` directly.
-2. Run the simulator (and, if possible, kind) on your own Mac. Attach your own logs and screenshots.
+2. Run the kind experiments on your own Mac. Attach your own logs and screenshots of `kubectl get pods -w`.
 3. Rewrite "problem I encountered" and "unique decision" in your own words.
 4. Commit and put the commit hash in the report.
 5. Read `docs/defense_notes_ru.md`.

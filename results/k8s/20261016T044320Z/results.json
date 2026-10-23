@@ -1,0 +1,50 @@
+{
+  "context": "kind-aitu",
+  "results": [
+    {
+      "experiment": 1,
+      "name": "One Registration replica fails",
+      "t0": 1792125816.886809,
+      "t_end": 1792125825.294073,
+      "detection_time_s": 0.14,
+      "recovery_time_s": 3.41,
+      "requests": 37,
+      "failed": 0,
+      "failed_pct": 0.0,
+      "codes": {},
+      "visible_outage_s": 0.0
+    },
+    {
+      "experiment": 2,
+      "name": "All Registration replicas fail",
+      "t0": 1792125830.387902,
+      "t_end": 1792125838.3855202,
+      "detection_time_s": 0.13,
+      "recovery_time_s": 3.0,
+      "requests": 31,
+      "failed": 7,
+      "failed_pct": 22.6,
+      "codes": {
+        "0": 7
+      },
+      "visible_outage_s": 1.25
+    },
+    {
+      "experiment": 3,
+      "name": "Database unavailable (60 s)",
+      "db_restored_at_s": 60.0,
+      "t0": 1792125843.488248,
+      "t_end": 1792125913.472694,
+      "detection_time_s": 9.92,
+      "recovery_time_s": 64.98,
+      "requests": 99,
+      "failed": 79,
+      "failed_pct": 79.8,
+      "codes": {
+        "503": 19,
+        "0": 60
+      },
+      "visible_outage_s": 63.89
+    }
+  ]
+}

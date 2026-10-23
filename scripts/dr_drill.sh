@@ -8,7 +8,7 @@
 # (high availability) would copy to the standby immediately.
 #
 # Requirements: PostgreSQL 14+ client+server binaries in PATH or PGBIN
-#   macOS:  brew install postgresql@16 ; export PGBIN=$(brew --prefix postgresql@16)/bin
+#   macOS:  brew install postgresql@18 ; export PGBIN=$(brew --prefix postgresql@18)/bin
 # Run as a normal (non-root) user:  bash scripts/dr_drill.sh
 # Output: results/dr_drill.log  (all data is synthetic)
 set -euo pipefail

@@ -1,0 +1,23 @@
+# Liveness demo: POST /chaos/hang on registration-service-578f57dcdd-57gr7 at 04:45:22 UTC
+{"status": "liveness will hang"}
+t+0s restarts/ready: 0 true
+t+3s restarts/ready: 0 true
+t+6s restarts/ready: 0 true
+t+9s restarts/ready: 0 true
+t+12s restarts/ready: 0 true
+t+15s restarts/ready: 0 true
+t+18s restarts/ready: 0 true
+t+21s restarts/ready: 0 true
+t+24s restarts/ready: 0 true
+t+27s restarts/ready: 0 true
+t+30s restarts/ready: 0 true
+t+33s restarts/ready: 0 true
+t+36s restarts/ready: 1 false
+t+40s restarts/ready: 1 true
+
+11s         Normal    Killing     pod/registration-service-578f57dcdd-57gr7   Container registration failed liveness probe, will be restarted
+5s          Normal    Pulled      pod/registration-service-578f57dcdd-57gr7   Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+5s          Normal    Created     pod/registration-service-578f57dcdd-57gr7   Container created
+5s          Normal    Started     pod/registration-service-578f57dcdd-57gr7   Container started
+5s          Warning   Unhealthy   pod/registration-service-578f57dcdd-57gr7   Readiness probe failed: Get "http://10.244.1.10:8080/healthz/ready": read tcp 10.244.1.1:33110->10.244.1.10:8080: read: connection reset by peer
+5s          Warning   Unhealthy   pod/registration-service-578f57dcdd-57gr7   Readiness probe failed: Get "http://10.244.1.10:8080/healthz/ready": dial tcp 10.244.1.10:8080: connect: connection refused
