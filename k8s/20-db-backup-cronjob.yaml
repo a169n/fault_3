@@ -1,7 +1,4 @@
 # Logical database backup every 5 minutes (Part E, RPO <= 5 min).
-# Lab-scale approach. In production use continuous WAL archiving
-# (pgBackRest / WAL-G / CloudNativePG barman) to object storage in another
-# zone, plus a daily full base backup.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -36,7 +33,7 @@ spec:
               image: postgres:16-alpine
               envFrom:
                 - secretRef:
-                    name: registration-db-credentials
+                    name: db-credentials
               command:
                 - sh
                 - -c

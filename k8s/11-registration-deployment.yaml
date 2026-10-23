@@ -1,16 +1,3 @@
-# Registration Service - Deployment (Assignment 3, Part C)
-# Synthetic educational configuration. No real AITU endpoints or credentials.
-#
-# Resilience mechanisms in this file:
-#   replicas: 2                  -> redundancy, one replica can fail without outage
-#   readinessProbe               -> unhealthy replica is removed from the Service endpoints
-#   livenessProbe                -> hung process is restarted by the kubelet
-#   startupProbe                 -> liveness does not kill a slowly starting process
-#   resources requests/limits    -> guaranteed scheduling + protection from noisy neighbours
-#   RollingUpdate (maxUnavailable 0, maxSurge 1) -> zero-downtime deploys
-#   restartPolicy: Always        -> automatic restart of crashed containers
-#   anti-affinity / topology spread -> replicas land on different nodes
-#   preStop + terminationGracePeriodSeconds -> graceful shutdown, no dropped requests
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -81,17 +68,17 @@ spec:
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
-                  name: registration-db-credentials
+                  name: db-credentials
                   key: POSTGRES_DB
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: registration-db-credentials
+                  name: db-credentials
                   key: POSTGRES_USER
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: registration-db-credentials
+                  name: db-credentials
                   key: POSTGRES_PASSWORD
           resources:
             requests:

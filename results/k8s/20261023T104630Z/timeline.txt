@@ -1,0 +1,15 @@
+2026-10-23T10:46:30.222+00:00 kubectl context: kind-aitu
+2026-10-23T10:46:30.839+00:00 load generator running (5 req/s through the Service)
+2026-10-23T10:46:30.913+00:00 EXPERIMENT 1 begin, pods=['registration-service-5699d6c46d-26s5r', 'registration-service-5699d6c46d-jqgms'], ready endpoints=2
+2026-10-23T10:46:35.915+00:00 FAULT: force delete registration-service-5699d6c46d-26s5r
+2026-10-23T10:46:36.026+00:00 DETECTED after 0.11 s
+2026-10-23T10:46:38.931+00:00 RECOVERED (2 ready endpoints) after 3.02 s
+2026-10-23T10:46:44.034+00:00 EXPERIMENT 2 begin, pods=['registration-service-5699d6c46d-jqgms', 'registration-service-5699d6c46d-rpjpc'], ready endpoints=2
+2026-10-23T10:46:49.040+00:00 FAULT: force delete ['registration-service-5699d6c46d-jqgms', 'registration-service-5699d6c46d-rpjpc']
+2026-10-23T10:46:49.175+00:00 DETECTED after 0.14 s
+2026-10-23T10:46:52.089+00:00 RECOVERED (2 ready endpoints) after 3.05 s
+2026-10-23T10:46:57.196+00:00 EXPERIMENT 3 begin, pods=['registration-service-5699d6c46d-lfjg4', 'registration-service-5699d6c46d-p7znv'], ready endpoints=2
+2026-10-23T10:47:02.201+00:00 FAULT: scale statefulset/postgres to 0
+2026-10-23T10:47:12.232+00:00 DETECTED after 10.03 s
+2026-10-23T10:48:02.204+00:00 FAULT REMOVED: scale statefulset/postgres to 1
+2026-10-23T10:48:06.966+00:00 RECOVERED (2 ready endpoints) after 64.76 s

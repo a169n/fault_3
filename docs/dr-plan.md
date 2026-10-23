@@ -6,7 +6,7 @@ Targets from the assignment: **RPO ≤ 5 min**, **RTO ≤ 15 min**. All data is 
 
 | Mechanism | Frequency | Expected RPO | Recovery time | Purpose |
 |---|---|---|---|---|
-| **Database backup**: base backup plus continuous WAL archiving to object storage in another zone (pgBackRest / WAL-G / CloudNativePG Barman). In the lab: `pg_dump` CronJob every 5 min (`k8s/20-db-backup-cronjob.yaml`). | Full base backup daily at 02:00. WAL streamed continuously, with `archive_timeout = 60 s`. Logical dump every 5 min as a second copy. | **≤ 1 min** (WAL). ≤ 5 min (dump). | 5–10 min to restore the base backup and replay WAL to a point in time. Lab drill: 0.71 s for 1,250 rows. | Protects against data loss and corruption: human error (`DROP TABLE`), a bad migration, ransomware, or losing both DB nodes. |
+| **Database backup**: base backup plus continuous WAL archiving to object storage in another zone (pgBackRest / WAL-G / CloudNativePG Barman). In the lab: `pg_dump` CronJob every 5 min (`k8s/20-db-backup-cronjob.yaml`). | Full base backup daily at 02:00. WAL streamed continuously, with `archive_timeout = 60 s`. Logical dump every 5 min as a second copy. | **≤ 1 min** (WAL). ≤ 5 min (dump). | 5–10 min to restore the base backup and replay WAL to a point in time. Lab drill: 0.52 s for 1,250 rows. | Protects against data loss and corruption: human error (`DROP TABLE`), a bad migration, ransomware, or losing both DB nodes. |
 | **Replica**: PostgreSQL streaming replication to a standby node in another zone, with automatic failover (Patroni or CloudNativePG). | Continuous | ≈ 0–5 s (asynchronous). 0 with synchronous commit. | 30–60 s automatic failover. Clients reconnect through the `postgres` Service DNS name. | **High availability**: survive the loss of one DB node or zone without restoring anything. |
 | **Configuration backup**: all Kubernetes YAML in Git (GitOps with Argo CD or Flux), secrets in a secret manager, etcd snapshot. | On every change (git commit). etcd snapshot hourly. | 0 for everything in Git | 3–5 min (`kubectl apply -f k8s/` or an Argo CD sync to a new cluster) | Rebuild the platform from scratch. Roll back a bad configuration change (`kubectl rollout undo`). |
 | **Full recovery**: DR runbook (section 3). A warm standby cluster in a second zone or region. | DR drill every semester, before the registration period | **≤ 5 min** (last archived WAL segment) | **≤ 15 min**: about 2 detect/declare + 3 cluster + 2 apply + 5 DB PITR + 2 DNS switch = 14 min | Recover from losing the whole cluster, data centre or region. |
@@ -23,8 +23,8 @@ Steps: write 1,000 rows → take backups → write 250 more rows → **disaster:
 
 | Strategy | Restore time (lab) | Rows recovered | Data lost |
 |---|---|---|---|
-| A) logical `pg_dump` / `pg_restore` | 0.32 s | 1,000 / 1,250 | 250 rows: everything written after the dump (RPO = time since the last dump) |
-| B) `pg_basebackup` + WAL archive + PITR (`recovery_target_time`) | 0.71 s | **1,250 / 1,250** | 0 rows (target set 1 s before the DROP) |
+| A) logical `pg_dump` / `pg_restore` | 0.06 s | 1,000 / 1,250 | 250 rows: everything written after the dump (RPO = time since the last dump) |
+| B) `pg_basebackup` + WAL archive + PITR (`recovery_target_time`) | 0.52 s | **1,250 / 1,250** | 0 rows (target set 1 s before the DROP) |
 
 Important: **a streaming replica would not have helped here.** `DROP TABLE` is replicated to the standby within milliseconds. Only a backup with history (PITR) can return to the state before the error.
 
@@ -48,6 +48,6 @@ Lab times are small because the dataset is tiny. For the real 10,000-student reg
 | Mechanisms | Replicas, probes, load balancing, automatic failover, PDB | Backups with history, WAL archive / PITR, Git config, standby site, runbook, drills |
 | Metric | Availability % (99.9%), detection and failover time in seconds | **RPO** (how much data we may lose) and **RTO** (how long recovery may take) |
 | Timescale | Seconds, automatic | Minutes to hours, often with human decisions |
-| Example from this project | Experiment 1: one replica crashed and users saw 0.8 s of errors | DR drill: `DROP TABLE` replicated instantly; only the PITR backup restored the data |
+| Example from this project | Experiment 1: one replica was killed and users saw 0 errors (0 of 35 requests failed) | DR drill: `DROP TABLE` replicated instantly; only the PITR backup restored the data |
 
 HA and DR are different engineering objectives because they cover different failure classes. **HA copies the current state; DR keeps the history of states.** HA redundancy faithfully reproduces logical errors, so a system can be 99.99% available and still lose all its data in one bad command. The reverse also holds: perfect backups do not prevent downtime, because restoring takes minutes. A resilient platform needs both. HA keeps the availability budget (≤ 8.76 h downtime per year), and DR bounds the worst case (≤ 5 min of lost data, ≤ 15 min to recover).

@@ -3,31 +3,27 @@ title: "Assignment 3 — Cloud Computing and Microservices Resilience"
 subtitle: "AITU Digital Student Services Platform (synthetic) — Student Technical Work Report"
 ---
 
-> **Context note.** All operational data in this report is synthetic educational data. It does not describe real AITU infrastructure, incidents, endpoints or credentials.
->
-> Fields marked **[FILL IN]** must be completed by the student personally.
-
 # 1. Student and Submission Information
 
 | Required field | Student entry |
 |---|---|
-| Student full name | [FILL IN] |
-| Student ID | [FILL IN] |
-| Group / cohort | [FILL IN] |
-| Instructor | [FILL IN] |
-| Date of submission | [FILL IN] |
-| Individual variant / task code assigned by instructor | [FILL IN] |
-| Git repository / project link | https://github.com/a169n/fault_3 [FILL IN: branch / commit hash] |
-| Attached code / file names | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml`, `k8s/20-db-backup-cronjob.yaml`, `app/registration_service.py`, `scripts/availability.py`, `scripts/k8s/run_experiments.py`, `scripts/dr_drill.sh`, `docs/architecture.png`, `docs/rbd.png`, `results/*` |
+| Student full name | Aibyn Talgatov |
+| Student ID | |
+| Group / cohort | |
+| Instructor | Serek Azamat |
+| Date of submission | 23.10.2026 |
+| Individual variant / task code assigned by instructor | |
+| Git repository / project link | https://github.com/a169n/fault_3, branch `main` |
+| Attached code / file names | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml`, `k8s/20-db-backup-cronjob.yaml`, `app/registration_service.py`, `app/config.py`, `app/store.py`, `app/handlers.py`, `scripts/availability.py`, `scripts/k8s/run_experiments.py`, `scripts/dr_drill.sh`, `docs/architecture.png`, `docs/rbd.png`, `docs/screenshots/*.png`, `results/*` |
 
 # 2. Work Period and Task Record
 
 | Item | Student entry |
 |---|---|
-| Work start date/time | [FILL IN] |
-| Work completion date/time | [FILL IN] |
+| Work start date/time | 12.10.2026, 20:12 (Astana time) |
+| Work completion date/time | 23.10.2026 |
 | Main task completed | Resilient architecture for the synthetic AITU student-services platform: availability model, Kubernetes resilience design for the Registration Service, failure experiments, RPO/RTO and DR plan |
-| Tools / technologies used | Kubernetes (Deployment, Service, PodDisruptionBudget, CronJob, StatefulSet, probes), Docker, kind, kubectl, kubeconform, Python 3, PostgreSQL 16 in the cluster, PostgreSQL 18 for the DR drill (pg_dump, pg_basebackup, WAL archiving, PITR), Git |
+| Tools / technologies used | Kubernetes (Deployment, Service, PodDisruptionBudget, CronJob, StatefulSet, probes), Docker, kind, kubectl, kubeconform, Graphviz (diagrams), Python 3, PostgreSQL 16 in the cluster, PostgreSQL 18 for the DR drill (pg_dump, pg_basebackup, WAL archiving, PITR), Git |
 | Main technical output produced | Kubernetes YAML (validated against the Kubernetes 1.31 schema), a Registration microservice with liveness and readiness endpoints, an availability calculator, failure experiments on a real Kubernetes cluster (kind), a DR drill script, measured results |
 
 # 3. Report Structure
@@ -36,7 +32,7 @@ subtitle: "AITU Digital Student Services Platform (synthetic) — Student Techni
 
 **Architecture:** Users → Load Balancer → API Gateway → Auth / Course / Registration → Database.
 
-![Resilient architecture (orange dashed = redundancy added by this design)](../docs/architecture.png){width=100%}
+![Resilient architecture (dashed = redundancy added by this design)](architecture.png){width=60%}
 
 | Component | Failure scenario | Effect on student service | Resilience mechanism |
 |---|---|---|---|
@@ -50,8 +46,8 @@ subtitle: "AITU Digital Student Services Platform (synthetic) — Student Techni
 | Required content | Student response / evidence |
 |---|---|
 | **Summary** | The services behind the gateway are already redundant (2 replicas each). The real single points of failure are the **Load Balancer and the API Gateway**: both are single instances in the given design. The database is redundant against node failure, but replication does not protect against logical errors, so DR backups are needed as well. |
-| **Evidence / artifact reference** | `docs/architecture.svg` / `.png`, `docs/rbd.png`, table above. For the Registration Service the mechanisms are implemented in `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml` and `k8s/13-registration-pdb.yaml`. |
-| **Student-specific decision or observation** | The liveness probe does **not** check the database; only the readiness probe does. If liveness depended on the DB, a DB outage would make the kubelet restart every healthy Registration pod in a loop (a restart storm), which adds load and hides the real cause. Experiment 3 confirms this: the DB was down for 30 s and there were **0 pod restarts**. |
+| **Evidence / artifact reference** | `docs/architecture.png`, `docs/rbd.png`, table above. For the Registration Service the mechanisms are implemented in `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml` and `k8s/13-registration-pdb.yaml`. |
+| **Student-specific decision or observation** | The liveness probe does **not** check the database; only the readiness probe does. If liveness depended on the DB, a DB outage would make the kubelet restart every healthy Registration pod in a loop (a restart storm), which adds load and hides the real cause. Experiment 3 confirms this: the DB was down for 60 s and there were **0 pod restarts**. |
 
 ## 3.2 Availability Calculation (Part B)
 
@@ -66,7 +62,7 @@ The calculation is reproducible with `python3 scripts/availability.py` (output i
 | Database | 2 nodes | 1 − (1 − 0.997)² = 1 − 0.000009 | **99.9991%** |
 | End-to-end | Series LB × GW × Auth × Course × Registration × DB | 0.9995 × 0.9990 × 0.999975³ × 0.999991 | **99.8417%** |
 
-![Reliability block diagram — baseline vs. proposed](../docs/rbd.png){width=100%}
+![Reliability block diagram (`docs/rbd.png`): baseline vs. proposed](rbd.png){width=100%}
 
 **1. Does the design meet 99.9%?** **No.** 99.8417% means about **13.9 h of downtime per year** (68 min per month). The target 99.9% allows only 8.76 h per year (43 min per month).
 
@@ -142,8 +138,8 @@ spec: { type: ClusterIP, selector: { app: registration-service }, ports: [{ port
 | Required content | Student response / evidence |
 |---|---|
 | **Summary** | The Registration Service runs 2 replicas with startup, readiness and liveness probes, resource requests and limits, a zero-downtime rolling update, automatic restart, a ClusterIP Service for discovery, a PDB, and graceful shutdown. |
-| **Evidence / artifact reference** | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml`. Validation: `kubeconform -strict -summary k8s/*.yaml` → "Valid: 11, Invalid: 0". Application health endpoints: `app/registration_service.py`. The DB-backed behaviour was tested against a real PostgreSQL 16 in `results/postgres_backend_check.log`. |
-| **Student-specific decision or observation** | **Tuned setting: the readiness probe.** The Kubernetes default (`periodSeconds: 10`, `failureThreshold: 3`) needs about 30 s to take a broken replica out of rotation. I set 5 s × 2, which gives about 10 s. **Measured: 9.92 s** in Experiment 3 on the kind cluster. I did not use 1 failure, so that a single slow check (2 s timeout) does not make the endpoint flap. |
+| **Evidence / artifact reference** | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml`. Validation: `kubeconform -strict -summary k8s/*.yaml` → "Valid: 11, Invalid: 0". Application health endpoints: `app/handlers.py` (the service is split into `config.py` settings, `store.py` PostgreSQL access, `handlers.py` HTTP endpoints and `registration_service.py` start-up and graceful shutdown). The DB-backed behaviour was tested against a real PostgreSQL 16 in `results/postgres_backend_check.log`. |
+| **Student-specific decision or observation** | **Tuned setting: the readiness probe.** The Kubernetes default (`periodSeconds: 10`, `failureThreshold: 3`) needs about 30 s to take a broken replica out of rotation. I set 5 s × 2, which gives about 10 s. **Measured: 10.03 s** in Experiment 3 on the kind cluster. I did not use 1 failure, so that a single slow check (2 s timeout) does not make the endpoint flap. |
 
 ## 3.4 Failure Experiments on Kubernetes (Part D)
 
@@ -151,18 +147,28 @@ spec: { type: ClusterIP, selector: { app: registration-service }, ports: [{ port
 
 | Experiment | Injected failure | Detection time | Recovery time | User impact |
 |---|---|---|---|---|
-| 1 | One Registration replica (`kubectl delete pod --force --grace-period=0`) | **0.14 s** (pod removed from endpoints) | **3.41 s** (ReplicaSet created a new pod, Ready) | **0 of 37 requests failed.** The second replica served all traffic. Registration stayed available. |
-| 2 | All Registration replicas (both pods force-deleted) | **0.13 s** (0 ready endpoints) | **3.00 s** (both new pods Ready) | **Full outage for 1.25 s**: 7 of 31 requests failed with `000` (connection failed). |
-| 3 | Database unavailable for 60 s (`kubectl scale statefulset/postgres --replicas=0`) | **9.92 s** (readiness failed 2 × 5 s, both pods removed from endpoints) | **64.98 s** from injection = **about 5 s after the DB returned** | Registration unavailable for the whole outage (63.9 s): 79 of 99 requests failed. Until detection users got **fast HTTP 503** (19 requests); after both pods left the endpoints, connections failed (`000`, 60 requests). **0 pod restarts**, because liveness is independent of the DB. |
-| 4 (bonus) | One replica hangs (`POST /chaos/hang`, liveness stops answering) | **≈ 33 s** (3 liveness failures × 10 s → "failed liveness probe, will be restarted") | **≈ 40 s** (container restarted, Ready again) | **None**: the other replica kept serving; the kubelet restarted the hung container automatically (RESTARTS 0 → 1). |
+| 1 | One Registration replica (`kubectl delete pod --force --grace-period=0`) | **0.11 s** (pod removed from endpoints) | **3.02 s** (ReplicaSet created a new pod, Ready) | **0 of 35 requests failed.** The second replica served all traffic. Registration stayed available. |
+| 2 | All Registration replicas (both pods force-deleted) | **0.14 s** (0 ready endpoints) | **3.05 s** (both new pods Ready) | **Full outage for 1.25 s**: 7 of 31 requests failed with `000` (connection failed). |
+| 3 | Database unavailable for 60 s (`kubectl scale statefulset/postgres --replicas=0`) | **10.03 s** (readiness failed 2 × 5 s, both pods removed from endpoints) | **64.76 s** from injection = **about 5 s after the DB returned** | Registration unavailable for the whole outage (63.9 s): 80 of 101 requests failed. Until detection users got **fast HTTP 503** (20 requests); after both pods left the endpoints, connections failed (`000`, 60 requests). **0 pod restarts**, because liveness is independent of the DB. |
+| 4 (bonus) | One replica hangs (`POST /chaos/hang`, liveness stops answering) | **≈ 29 s** (3 liveness failures × 10 s → "failed liveness probe, will be restarted") | **≈ 34 s** (container restarted, Ready again) | **None**: the other replica kept serving; the kubelet restarted the hung container automatically (RESTARTS 0 → 1). |
+
+**Screenshots from my run on 23.10.2026** (`docs/screenshots/`):
+
+![Docker Desktop: the three kind nodes of my cluster (aitu-control-plane, aitu-worker, aitu-worker2) running](screenshots/05-docker-desktop.png){width=100%}
+
+![Terminal: output of `python3 scripts/k8s/run_experiments.py --db-outage 60` (Experiments 1-3)](screenshots/01-run-experiments.png){width=100%}
+
+![Terminal: `kubectl -n aitu-sss get pods -o wide -w` during the experiments: deleted pods are replaced (Pending -> ContainerCreating -> Running -> 1/1), postgres-0 is scaled to 0 and back](screenshots/02-pods-watch.png){width=100%}
+
+![Terminal: Experiment 4, the hung pod fails its liveness probe and is restarted (RESTARTS 0 -> 1)](screenshots/03-liveness-restart.png){width=100%}
 
 | Required content | Student response / evidence |
 |---|---|
 | **Summary** | With 2 replicas, losing one replica caused no failed requests. Losing both caused a 1.25 s full outage, limited by pod re-creation plus readiness time. A DB outage cannot be masked by service replicas: readiness removed the pods within 10 s, and the service recovered on its own about 5 s after the DB returned, with no restarts. |
-| **Evidence / artifact reference** | `results/k8s/20261016T044320Z/`: `results.md` and `results.json` (numbers), `timeline.txt` (fault / detection / recovery times), `load-generator.log` (every request with timestamp and HTTP code), `events.txt` (Kubernetes events), `pods.txt`, `liveness_hang.txt` (Experiment 4). [FILL IN: screenshots of `kubectl -n aitu-sss get pods -w` from your own run] |
+| **Evidence / artifact reference** | `results/k8s/20261023T104630Z/`: `results.md` and `results.json` (numbers), `timeline.txt` (fault / detection / recovery times), `load-generator.log` (every request with timestamp and HTTP code), `events.txt` (Kubernetes events), `pods.txt`, `liveness_hang.txt` (Experiment 4). Screenshots of the run: `docs/screenshots/01-05` (shown above). |
 | **Student-specific decision or observation** | (1) On a real cluster the full outage in Experiment 2 was only 1.25 s because the ReplicaSet immediately created new pods and the startup + readiness probes passed in about 3 s. If the containers were crashing instead (same pod restarted), **CrashLoopBackOff** would add 10 s, 20 s, 40 s … delays, so "two replicas" does not mean "two independent recoveries". (2) During the DB outage users first got a clean 503 from the pods, then connection errors once no pod was Ready. A gateway that returns a friendly 503 + `Retry-After` when the upstream has no endpoints would make the whole outage look the same to students. |
 
-**What happens if both replicas fail (oral defense):** The Service has 0 ready endpoints, so the gateway gets connection errors or 503 and registration is down. Recovery is automatic. The kubelet restarts crashed containers (`restartPolicy: Always`), or the ReplicaSet creates new pods if the pods or the node are gone; the scheduler places them on another node. Traffic returns as soon as the first pod passes readiness (3.0 s for both pods on my kind cluster; longer if the image must be pulled on a new node). Repeated crashes are slowed by CrashLoopBackOff. The PDB protects only against *voluntary* disruptions, not crashes. To reduce the risk: anti-affinity across nodes and zones, a friendly 503 + Retry-After from the gateway, alerting on "0 ready endpoints", and a fix for the root cause (for example a bad release → `kubectl rollout undo`).
+**What happens if both replicas fail (oral defense):** The Service has 0 ready endpoints, so the gateway gets connection errors or 503 and registration is down. Recovery is automatic. The kubelet restarts crashed containers (`restartPolicy: Always`), or the ReplicaSet creates new pods if the pods or the node are gone; the scheduler places them on another node. Traffic returns as soon as the first pod passes readiness (3.05 s for both pods on my kind cluster; longer if the image must be pulled on a new node). Repeated crashes are slowed by CrashLoopBackOff. The PDB protects only against *voluntary* disruptions, not crashes. To reduce the risk: anti-affinity across nodes and zones, a friendly 503 + Retry-After from the gateway, alerting on "0 ready endpoints", and a fix for the root cause (for example a bad release → `kubectl rollout undo`).
 
 ## 3.5 RPO/RTO and Disaster Recovery (Part E)
 
@@ -170,7 +176,7 @@ Full plan: `docs/dr-plan.md`. Targets: RPO ≤ 5 min, RTO ≤ 15 min.
 
 | Mechanism | Frequency | Expected RPO | Recovery time | Purpose |
 |---|---|---|---|---|
-| Database backup (base backup + continuous WAL archive to object storage in another zone; `pg_dump` CronJob in the lab) | Base backup daily at 02:00. WAL continuous (`archive_timeout` 60 s). Dump every 5 min. | ≤ 1 min (WAL), ≤ 5 min (dump) | 5–10 min (restore + WAL replay); lab PITR 0.71 s | Data loss, corruption, human error, ransomware, loss of both DB nodes |
+| Database backup (base backup + continuous WAL archive to object storage in another zone; `pg_dump` CronJob in the lab) | Base backup daily at 02:00. WAL continuous (`archive_timeout` 60 s). Dump every 5 min. | ≤ 1 min (WAL), ≤ 5 min (dump) | 5–10 min (restore + WAL replay); lab PITR 0.52 s | Data loss, corruption, human error, ransomware, loss of both DB nodes |
 | Replica (streaming standby in another zone, auto-failover) | Continuous | ≈ 0–5 s | 30–60 s | HA for DB node or zone failure |
 | Configuration backup (all YAML in Git / GitOps, secrets in a secret manager, etcd snapshot) | On every change; etcd hourly | 0 | 3–5 min (`kubectl apply -f k8s/`) | Rebuild the platform, roll back bad configuration |
 | Full recovery (runbook + warm standby cluster) | DR drill every semester | ≤ 5 min | ≤ 15 min (2 + 3 + 2 + 5 + 2 min) | Loss of the cluster or region |
@@ -180,8 +186,10 @@ Full plan: `docs/dr-plan.md`. Targets: RPO ≤ 5 min, RTO ≤ 15 min.
 | Required content | Student response / evidence |
 |---|---|
 | **Summary** | RPO ≤ 5 min is met by continuous WAL archiving (≤ 1 min), with 5-minute logical dumps as a second copy. RTO ≤ 15 min is met only with a warm standby cluster and a scripted runbook. Building a new cluster from nothing would exceed the budget. |
-| **Evidence / artifact reference** | `scripts/dr_drill.sh` → `results/dr_drill.log`: logical restore 0.32 s, **1,000 of 1,250 rows (250 lost)**; base backup + WAL PITR 0.71 s, **1,250 of 1,250 rows (0 lost)**. `k8s/20-db-backup-cronjob.yaml` (5-minute dumps, `concurrencyPolicy: Forbid`, retention of 24 files). |
-| **Student-specific decision or observation** | The drill showed that "a backup every 5 minutes" is not a guarantee: everything after the last dump is lost (250 rows). PITR from the WAL archive lost nothing. A problem I hit: `pg_basebackup` took **95 s** the first time because it waited for a spread checkpoint. With `-c fast` it took 0.39 s, which matters for the RTO budget. |
+| **Evidence / artifact reference** | `scripts/dr_drill.sh` → `results/dr_drill.log`: logical restore 0.06 s, **1,000 of 1,250 rows (250 lost)**; base backup + WAL PITR 0.52 s, **1,250 of 1,250 rows (0 lost)**. `k8s/20-db-backup-cronjob.yaml` (5-minute dumps, `concurrencyPolicy: Forbid`, retention of 24 files). |
+| **Student-specific decision or observation** | The drill showed that "a backup every 5 minutes" is not a guarantee: everything after the last dump is lost (250 rows). PITR from the WAL archive lost nothing. A problem I hit: `pg_basebackup` took **95 s** the first time because it waited for a spread checkpoint. With `-c fast` it took 0.29 s in the final run, which matters for the RTO budget. |
+
+![Terminal: `bash scripts/dr_drill.sh` on 23.10.2026: the logical dump restores 1,000 of 1,250 rows, PITR restores 1,250 of 1,250](screenshots/04-dr-drill.png){width=100%}
 
 ## 3.6 Final Architecture Decision
 
@@ -195,10 +203,10 @@ Full plan: `docs/dr-plan.md`. Targets: RPO ≤ 5 min, RTO ≤ 15 min.
 
 | Individual evidence | Student entry |
 |---|---|
-| My unique technical decision | Readiness depends on the DB but liveness does not. Readiness tuned to 5 s × 2 (about 10 s detection instead of the default 30 s). `maxUnavailable: 0` + `minReadySeconds: 5` for zero-downtime rollouts. 2 API Gateways as the key availability change. [FILL IN / adjust in your own words] |
-| My own implementation / calculation evidence | `scripts/availability.py` output; `results/k8s/20261016T044320Z/results.md` (my run on a kind cluster on my Mac); `results/dr_drill.log`. |
-| Exact file, code, commit, notebook, or log reference | `k8s/11-registration-deployment.yaml` @ commit [FILL IN after committing]; `results/k8s/20261016T044320Z/timeline.txt` |
-| One problem I personally encountered and how I solved it | [FILL IN: your own. Problems that came up while building this project: (a) `pg_basebackup` waited 95 s for a checkpoint → fixed with `-c fast`; (b) in the experiment log the "DETECTED" line for Experiment 3 appeared only after the 60 s DB outage had ended, which looked like a wrong measurement → the value was correct but printed late; moved the log line before the outage wait in `run_experiments.py`.] |
+| My unique technical decision | Readiness depends on the DB but liveness does not. Readiness tuned to 5 s × 2 (about 10 s detection instead of the default 30 s). `maxUnavailable: 0` + `minReadySeconds: 5` for zero-downtime rollouts. 2 API Gateways as the key availability change. |
+| My own implementation / calculation evidence | `scripts/availability.py` output; `results/k8s/20261023T104630Z/results.md` (my run on a kind cluster on my Mac); `results/dr_drill.log`. |
+| Exact file, code, commit, notebook, or log reference | `k8s/11-registration-deployment.yaml` on branch `main` of the repository above; `results/k8s/20261023T104630Z/timeline.txt` |
+| One problem I personally encountered and how I solved it | I renamed the database Secret to `db-credentials` and changed the database name, user and password. After that the stack broke in two places. (1) Three manifests (`02-postgres.yaml`, `11-registration-deployment.yaml`, `20-db-backup-cronjob.yaml`) still referenced the old Secret name, so the pods could not get their environment. I updated every `secretRef` / `secretKeyRef`. (2) PostgreSQL creates `POSTGRES_USER` and `POSTGRES_DB` only when the data directory is empty. The existing volume still had the old user, so the new login would fail. I re-created the lab Postgres volume (synthetic data only) and deleted the old Secret, so nothing could keep using it. Then I verified: both Registration pods Ready, a test registration was stored, `current_user = aibyn` in the database, and a manual run of the backup CronJob produced a dump. Lesson: changing database credentials needs a migration step (`ALTER ROLE` or a re-initialised volume), not only a Secret change. |
 | One limitation of my own solution | Part D numbers come from a local kind cluster on one laptop, not from a production cluster: all nodes share one machine, images are preloaded (no pull time), and the load is only 5 req/s. The lab uses a single PostgreSQL pod (the 2-node HA database is described but not deployed), and the `pg_dump` CronJob writes to a PVC in the same cluster (in production: object storage in another zone). |
 
 # 5. Evidence Checklist
@@ -207,7 +215,7 @@ Full plan: `docs/dr-plan.md`. Targets: RPO ≤ 5 min, RTO ≤ 15 min.
 - [x] Architecture / RBD diagram: `docs/architecture.png`, `docs/rbd.png`
 - [x] Source code and configuration files: `app/`, `k8s/`, `scripts/`
 - [x] Execution logs / experiment results: `results/`
-- [ ] Screenshots or other reproducible evidence: [FILL IN: screenshots of your own run, e.g. `kubectl get pods -w`, `run_experiments.py` output]
+- [x] Screenshots: `docs/screenshots/` (Terminal runs of the experiments, `kubectl get pods -w`, the liveness restart and the DR drill; Docker Desktop with the kind nodes)
 - [x] Links to code and artifacts: repository above
 - [x] Before/after comparison: baseline 99.84% → 99.94% / 99.99%; `pg_dump` vs PITR
 - [x] Final technical conclusion (section 3.6)
@@ -218,5 +226,5 @@ I confirm that this report describes my own work. I have not copied another stud
 
 | Role | Name | Signature | Date |
 |---|---|---|---|
-| Student / Executor | [FILL IN] | | |
-| Instructor / Accepted by | | | |
+| Student / Executor | Aibyn Talgatov | a1byn | 23.10.2026 |
+| Instructor / Accepted by | Serek Azamat | | |

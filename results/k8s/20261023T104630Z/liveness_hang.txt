@@ -1,0 +1,25 @@
+# Liveness demo: POST /chaos/hang on registration-service-5699d6c46d-lfjg4 at 10:48:48 UTC
+NAME                                    READY   STATUS    RESTARTS   AGE
+registration-service-5699d6c46d-lfjg4   1/1     Running   0          119s
+registration-service-5699d6c46d-p7znv   1/1     Running   0          119s
+{"status": "liveness will hang"}
+t+0s restarts/ready: 0 true
+t+3s restarts/ready: 0 true
+t+6s restarts/ready: 0 true
+t+9s restarts/ready: 0 true
+t+12s restarts/ready: 0 true
+t+15s restarts/ready: 0 true
+t+19s restarts/ready: 0 true
+t+22s restarts/ready: 0 true
+t+25s restarts/ready: 0 true
+t+28s restarts/ready: 0 true
+t+31s restarts/ready: 1 false
+t+34s restarts/ready: 1 true
+
+NAME                                    READY   STATUS    RESTARTS     AGE
+registration-service-5699d6c46d-lfjg4   1/1     Running   1 (6s ago)   2m33s
+registration-service-5699d6c46d-p7znv   1/1     Running   0            2m33s
+
+11s         Warning   Unhealthy   pod/registration-service-5699d6c46d-lfjg4   Liveness probe failed: Get "http://10.244.2.17:8080/healthz/live": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+11s         Normal    Killing     pod/registration-service-5699d6c46d-lfjg4   Container registration failed liveness probe, will be restarted
+6s          Normal    Started     pod/registration-service-5699d6c46d-lfjg4   Container started

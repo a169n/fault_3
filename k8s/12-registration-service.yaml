@@ -1,7 +1,6 @@
 # Registration Service - Service (service discovery + load balancing).
 # Other services (API Gateway) reach it by DNS name:
 #   registration-service.aitu-sss.svc.cluster.local:80
-# Only pods whose readinessProbe passes are listed as endpoints.
 apiVersion: v1
 kind: Service
 metadata:
