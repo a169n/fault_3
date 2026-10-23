@@ -1,0 +1,22 @@
+{
+  "context": "kind-aitu",
+  "results": [
+    {
+      "experiment": 3,
+      "name": "Database unavailable (60 s)",
+      "db_restored_at_s": 60.01,
+      "t0": 1792765906.838629,
+      "t_end": 1792765975.42751,
+      "detection_time_s": 8.54,
+      "recovery_time_s": 63.58,
+      "requests": 100,
+      "failed": 80,
+      "failed_pct": 80.0,
+      "codes": {
+        "503": 19,
+        "0": 61
+      },
+      "visible_outage_s": 62.62
+    }
+  ]
+}

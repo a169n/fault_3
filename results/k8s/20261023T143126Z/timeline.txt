@@ -1,0 +1,7 @@
+2026-10-23T14:31:26.565+00:00 kubectl context: kind-aitu
+2026-10-23T14:31:41.754+00:00 load generator running (5 req/s through the Service)
+2026-10-23T14:31:41.837+00:00 EXPERIMENT 3 begin, pods=['registration-service-7757668f5b-nnw7f', 'registration-service-7757668f5b-xf4rz'], ready endpoints=2
+2026-10-23T14:31:46.838+00:00 FAULT: scale statefulset/postgres to 0
+2026-10-23T14:31:55.377+00:00 DETECTED after 8.54 s
+2026-10-23T14:32:46.843+00:00 FAULT REMOVED: scale statefulset/postgres to 1
+2026-10-23T14:32:50.422+00:00 RECOVERED (2 ready endpoints) after 63.58 s

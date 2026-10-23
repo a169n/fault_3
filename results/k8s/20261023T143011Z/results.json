@@ -1,0 +1,18 @@
+{
+  "context": "kind-aitu",
+  "results": [
+    {
+      "experiment": 1,
+      "name": "One Registration replica fails",
+      "t0": 1792765816.98829,
+      "t_end": 1792765825.3587189,
+      "detection_time_s": 0.12,
+      "recovery_time_s": 3.37,
+      "requests": 37,
+      "failed": 0,
+      "failed_pct": 0.0,
+      "codes": {},
+      "visible_outage_s": 0.0
+    }
+  ]
+}

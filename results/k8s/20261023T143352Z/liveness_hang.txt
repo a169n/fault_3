@@ -1,0 +1,19 @@
+FAULT: POST /chaos/hang on registration-service-7757668f5b-nnw7f (restarts before: 0)
+t+0s restarts=0 ready=True
+t+3s restarts=0 ready=True
+t+6s restarts=0 ready=True
+t+9s restarts=0 ready=True
+t+12s restarts=0 ready=True
+t+15s restarts=0 ready=True
+t+18s restarts=0 ready=True
+t+22s restarts=0 ready=True
+t+25s restarts=0 ready=True
+t+28s restarts=0 ready=True
+t+31s restarts=0 ready=True
+t+34s restarts=1 ready=True
+DETECTED: liveness failed, container restarted after ~34 s
+RECOVERED: pod Ready again after ~34 s
+
+8s          Warning   Unhealthy   pod/registration-service-7757668f5b-nnw7f   Liveness probe failed: Get "http://10.244.2.48:8080/healthz/live": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+8s          Normal    Killing     pod/registration-service-7757668f5b-nnw7f   Container registration failed liveness probe, will be restarted
+3s          Normal    Started     pod/registration-service-7757668f5b-nnw7f   Container started

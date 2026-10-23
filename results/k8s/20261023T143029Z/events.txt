@@ -1,0 +1,189 @@
+LAST SEEN   TYPE      REASON                         OBJECT                                       MESSAGE
+135m        Normal    Scheduled                      pod/postgres-0                               Successfully assigned aitu-sss/postgres-0 to aitu-worker
+151m        Normal    Scheduled                      pod/registration-db-backup-29879280-ffh56    Successfully assigned aitu-sss/registration-db-backup-29879280-ffh56 to aitu-worker
+4m55s       Normal    Scheduled                      pod/load-generator                           Successfully assigned aitu-sss/load-generator to aitu-worker2
+58s         Normal    Scheduled                      pod/load-generator                           Successfully assigned aitu-sss/load-generator to aitu-worker2
+14s         Normal    Scheduled                      pod/load-generator                           Successfully assigned aitu-sss/load-generator to aitu-worker2
+6m10s       Normal    Scheduled                      pod/registration-db-backup-29879425-bk4pc    Successfully assigned aitu-sss/registration-db-backup-29879425-bk4pc to aitu-worker
+120m        Normal    Scheduled                      pod/registration-service-7757668f5b-fc4nm    Successfully assigned aitu-sss/registration-service-7757668f5b-fc4nm to aitu-worker2
+8s          Normal    Scheduled                      pod/registration-service-7757668f5b-xf4rz    Successfully assigned aitu-sss/registration-service-7757668f5b-xf4rz to aitu-worker2
+16m         Normal    Scheduled                      pod/registration-db-backup-29879415-flndx    Successfully assigned aitu-sss/registration-db-backup-29879415-flndx to aitu-worker
+121m        Normal    Scheduled                      pod/load-generator                           Successfully assigned aitu-sss/load-generator to aitu-worker2
+135m        Normal    Scheduled                      pod/registration-service-7757668f5b-97xbj    Successfully assigned aitu-sss/registration-service-7757668f5b-97xbj to aitu-worker2
+121m        Normal    Scheduled                      pod/registration-service-7757668f5b-nkg82    Successfully assigned aitu-sss/registration-service-7757668f5b-nkg82 to aitu-worker
+53s         Normal    Scheduled                      pod/registration-service-7757668f5b-7qn98    Successfully assigned aitu-sss/registration-service-7757668f5b-7qn98 to aitu-worker2
+70s         Normal    Scheduled                      pod/registration-db-backup-29879430-tbpx8    Successfully assigned aitu-sss/registration-db-backup-29879430-tbpx8 to aitu-worker
+120m        Normal    Scheduled                      pod/registration-service-7757668f5b-vqrcd    Successfully assigned aitu-sss/registration-service-7757668f5b-vqrcd to aitu-worker
+119m        Normal    Scheduled                      pod/registration-service-7757668f5b-pb4q8    Successfully assigned aitu-sss/registration-service-7757668f5b-pb4q8 to aitu-worker2
+8s          Normal    Scheduled                      pod/registration-service-7757668f5b-nnw7f    Successfully assigned aitu-sss/registration-service-7757668f5b-nnw7f to aitu-worker
+121m        Normal    Scheduled                      pod/registration-db-backup-29879310-nrb68    Successfully assigned aitu-sss/registration-db-backup-29879310-nrb68 to aitu-worker
+146m        Normal    Scheduled                      pod/registration-db-backup-29879285-mgwmq    Successfully assigned aitu-sss/registration-db-backup-29879285-mgwmq to aitu-worker
+4m49s       Normal    Scheduled                      pod/registration-service-7757668f5b-jz2nm    Successfully assigned aitu-sss/registration-service-7757668f5b-jz2nm to aitu-worker2
+134m        Normal    Scheduled                      pod/registration-service-7757668f5b-56xcf    Successfully assigned aitu-sss/registration-service-7757668f5b-56xcf to aitu-worker
+126m        Normal    Scheduled                      pod/registration-db-backup-29879305-9mlr9    Successfully assigned aitu-sss/registration-db-backup-29879305-9mlr9 to aitu-worker
+131m        Normal    Scheduled                      pod/registration-db-backup-29879300-j2776    Successfully assigned aitu-sss/registration-db-backup-29879300-j2776 to aitu-worker
+11m         Normal    Scheduled                      pod/registration-db-backup-29879420-qhcvw    Successfully assigned aitu-sss/registration-db-backup-29879420-qhcvw to aitu-worker
+119m        Normal    Scheduled                      pod/load-generator                           Successfully assigned aitu-sss/load-generator to aitu-worker2
+136m        Normal    Scheduled                      pod/registration-db-backup-29879295-5t29g    Successfully assigned aitu-sss/registration-db-backup-29879295-5t29g to aitu-worker
+141m        Normal    Scheduled                      pod/registration-db-backup-29879290-dbnxz    Successfully assigned aitu-sss/registration-db-backup-29879290-dbnxz to aitu-worker
+156m        Normal    Scheduled                      pod/registration-db-backup-29879275-p7gtd    Successfully assigned aitu-sss/registration-db-backup-29879275-p7gtd to aitu-worker
+156m        Normal    Created                        pod/registration-db-backup-29879275-p7gtd    Container created
+156m        Normal    SuccessfulCreate               job/registration-db-backup-29879275          Created pod: registration-db-backup-29879275-p7gtd
+156m        Normal    Started                        pod/registration-db-backup-29879275-p7gtd    Container started
+156m        Normal    Pulled                         pod/registration-db-backup-29879275-p7gtd    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+156m        Normal    Completed                      job/registration-db-backup-29879275          Job completed
+151m        Normal    Pulled                         pod/registration-db-backup-29879280-ffh56    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+151m        Normal    Created                        pod/registration-db-backup-29879280-ffh56    Container created
+151m        Normal    Started                        pod/registration-db-backup-29879280-ffh56    Container started
+151m        Normal    SuccessfulCreate               job/registration-db-backup-29879280          Created pod: registration-db-backup-29879280-ffh56
+151m        Normal    Completed                      job/registration-db-backup-29879280          Job completed
+146m        Normal    SuccessfulCreate               job/registration-db-backup-29879285          Created pod: registration-db-backup-29879285-mgwmq
+146m        Normal    Started                        pod/registration-db-backup-29879285-mgwmq    Container started
+146m        Normal    Created                        pod/registration-db-backup-29879285-mgwmq    Container created
+146m        Normal    Pulled                         pod/registration-db-backup-29879285-mgwmq    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+146m        Normal    SuccessfulDelete               cronjob/registration-db-backup               (combined from similar events): Deleted job registration-db-backup-29879270
+146m        Normal    Completed                      job/registration-db-backup-29879285          Job completed
+141m        Normal    SuccessfulCreate               job/registration-db-backup-29879290          Created pod: registration-db-backup-29879290-dbnxz
+141m        Normal    Created                        pod/registration-db-backup-29879290-dbnxz    Container created
+141m        Normal    Started                        pod/registration-db-backup-29879290-dbnxz    Container started
+141m        Normal    Pulled                         pod/registration-db-backup-29879290-dbnxz    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+141m        Normal    Completed                      job/registration-db-backup-29879290          Job completed
+136m        Normal    SuccessfulCreate               job/registration-db-backup-29879295          Created pod: registration-db-backup-29879295-5t29g
+136m        Normal    Started                        pod/registration-db-backup-29879295-5t29g    Container started
+136m        Normal    Pulled                         pod/registration-db-backup-29879295-5t29g    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+136m        Normal    Created                        pod/registration-db-backup-29879295-5t29g    Container created
+136m        Normal    Completed                      job/registration-db-backup-29879295          Job completed
+135m        Normal    SuccessfulDelete               statefulset/postgres                         Delete Pod postgres-0 in StatefulSet postgres successful
+135m        Normal    ScalingReplicaSet              deployment/registration-service              Scaled up replica set registration-service-7757668f5b from 0 to 1
+135m        Normal    Killing                        pod/postgres-0                               Stopping container postgres
+135m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-97xbj
+135m        Normal    Started                        pod/registration-service-7757668f5b-97xbj    Container started
+135m        Normal    Created                        pod/registration-service-7757668f5b-97xbj    Container created
+135m        Normal    Pulled                         pod/registration-service-7757668f5b-97xbj    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+135m        Normal    SuccessfulCreate               statefulset/postgres                         Create Pod postgres-0 in StatefulSet postgres successful
+135m        Normal    Pulled                         pod/postgres-0                               Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+135m        Normal    Created                        pod/postgres-0                               Container created
+135m        Normal    Started                        pod/postgres-0                               Container started
+135m        Warning   Unhealthy                      pod/postgres-0                               Readiness probe failed: /var/run/postgresql:5432 - no response
+134m        Normal    ScalingReplicaSet              deployment/registration-service              Scaled down replica set registration-service-5699d6c46d from 2 to 1
+134m        Normal    ScalingReplicaSet              deployment/registration-service              Scaled up replica set registration-service-7757668f5b from 1 to 2
+134m        Normal    Pulled                         pod/registration-service-7757668f5b-56xcf    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+134m        Normal    SuccessfulDelete               replicaset/registration-service-5699d6c46d   Deleted pod: registration-service-5699d6c46d-p7znv
+134m        Normal    Killing                        pod/registration-service-5699d6c46d-p7znv    Stopping container registration
+134m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-56xcf
+134m        Normal    Created                        pod/registration-service-7757668f5b-56xcf    Container created
+134m        Normal    Started                        pod/registration-service-7757668f5b-56xcf    Container started
+134m        Normal    ScalingReplicaSet              deployment/registration-service              Scaled down replica set registration-service-5699d6c46d from 1 to 0
+134m        Normal    SuccessfulDelete               replicaset/registration-service-5699d6c46d   Deleted pod: registration-service-5699d6c46d-lfjg4
+134m        Normal    Killing                        pod/registration-service-5699d6c46d-lfjg4    Stopping container registration
+131m        Normal    SuccessfulCreate               job/registration-db-backup-29879300          Created pod: registration-db-backup-29879300-j2776
+131m        Normal    Started                        pod/registration-db-backup-29879300-j2776    Container started
+131m        Normal    Created                        pod/registration-db-backup-29879300-j2776    Container created
+131m        Normal    Pulled                         pod/registration-db-backup-29879300-j2776    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+131m        Normal    Completed                      job/registration-db-backup-29879300          Job completed
+126m        Normal    Pulled                         pod/registration-db-backup-29879305-9mlr9    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+126m        Normal    Created                        pod/registration-db-backup-29879305-9mlr9    Container created
+126m        Normal    Started                        pod/registration-db-backup-29879305-9mlr9    Container started
+126m        Normal    SuccessfulCreate               job/registration-db-backup-29879305          Created pod: registration-db-backup-29879305-9mlr9
+126m        Normal    Completed                      job/registration-db-backup-29879305          Job completed
+121m        Normal    SuccessfulCreate               job/registration-db-backup-29879310          Created pod: registration-db-backup-29879310-nrb68
+121m        Normal    Pulled                         pod/registration-db-backup-29879310-nrb68    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+121m        Normal    Created                        pod/registration-db-backup-29879310-nrb68    Container created
+121m        Normal    Started                        pod/registration-db-backup-29879310-nrb68    Container started
+121m        Normal    Pulled                         pod/load-generator                           Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod
+121m        Normal    Created                        pod/load-generator                           Container created
+121m        Normal    Started                        pod/load-generator                           Container started
+121m        Normal    Completed                      job/registration-db-backup-29879310          Job completed
+121m        Normal    Pulled                         pod/registration-service-7757668f5b-nkg82    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+121m        Normal    Created                        pod/registration-service-7757668f5b-nkg82    Container created
+121m        Normal    Started                        pod/registration-service-7757668f5b-nkg82    Container started
+121m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-nkg82
+121m        Normal    Killing                        pod/registration-service-7757668f5b-56xcf    Stopping container registration
+121m        Warning   FailedPreStopHook              pod/registration-service-7757668f5b-56xcf    PreStopHook failed
+120m        Normal    Killing                        pod/registration-service-7757668f5b-97xbj    Stopping container registration
+120m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-vqrcd
+120m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-fc4nm
+120m        Normal    Killing                        pod/registration-service-7757668f5b-nkg82    Stopping container registration
+120m        Normal    Started                        pod/registration-service-7757668f5b-fc4nm    Container started
+120m        Normal    Created                        pod/registration-service-7757668f5b-vqrcd    Container created
+120m        Normal    Pulled                         pod/registration-service-7757668f5b-fc4nm    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+120m        Warning   FailedPreStopHook              pod/registration-service-7757668f5b-97xbj    PreStopHook failed
+120m        Normal    Created                        pod/registration-service-7757668f5b-fc4nm    Container created
+120m        Normal    Started                        pod/registration-service-7757668f5b-vqrcd    Container started
+120m        Normal    Pulled                         pod/registration-service-7757668f5b-vqrcd    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+120m        Warning   FailedPreStopHook              pod/registration-service-7757668f5b-nkg82    PreStopHook failed
+120m        Normal    Killing                        pod/load-generator                           Stopping container curl
+119m        Normal    Started                        pod/load-generator                           Container started
+119m        Normal    Pulled                         pod/load-generator                           Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod
+119m        Normal    Created                        pod/load-generator                           Container created
+119m        Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-pb4q8
+119m        Normal    Killing                        pod/registration-service-7757668f5b-fc4nm    Stopping container registration
+119m        Normal    Pulled                         pod/registration-service-7757668f5b-pb4q8    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+119m        Normal    Created                        pod/registration-service-7757668f5b-pb4q8    Container created
+119m        Normal    Started                        pod/registration-service-7757668f5b-pb4q8    Container started
+119m        Warning   FailedPreStopHook              pod/registration-service-7757668f5b-fc4nm    PreStopHook failed
+118m        Normal    Killing                        pod/load-generator                           Stopping container curl
+16m         Warning   FailedCreate                   cronjob/registration-db-backup               Error creating job: Unauthorized
+16m         Warning   FailedCreate                   job/registration-db-backup-29879415          Error creating: Unauthorized
+16m         Normal    Started                        pod/registration-db-backup-29879415-flndx    Container started
+16m         Normal    SuccessfulCreate               job/registration-db-backup-29879415          Created pod: registration-db-backup-29879415-flndx
+16m         Normal    Created                        pod/registration-db-backup-29879415-flndx    Container created
+16m         Normal    Pulled                         pod/registration-db-backup-29879415-flndx    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+16m         Normal    Completed                      job/registration-db-backup-29879415          Job completed
+11m         Normal    Pulled                         pod/registration-db-backup-29879420-qhcvw    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+11m         Normal    Created                        pod/registration-db-backup-29879420-qhcvw    Container created
+11m         Normal    Started                        pod/registration-db-backup-29879420-qhcvw    Container started
+11m         Normal    SuccessfulCreate               job/registration-db-backup-29879420          Created pod: registration-db-backup-29879420-qhcvw
+11m         Normal    Completed                      job/registration-db-backup-29879420          Job completed
+6m10s       Normal    Created                        pod/registration-db-backup-29879425-bk4pc    Container created
+6m10s       Normal    SuccessfulCreate               job/registration-db-backup-29879425          Created pod: registration-db-backup-29879425-bk4pc
+6m10s       Normal    Started                        pod/registration-db-backup-29879425-bk4pc    Container started
+6m10s       Normal    Pulled                         pod/registration-db-backup-29879425-bk4pc    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+6m8s        Normal    Completed                      job/registration-db-backup-29879425          Job completed
+4m55s       Normal    Pulled                         pod/load-generator                           Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod
+4m55s       Normal    Started                        pod/load-generator                           Container started
+4m55s       Normal    Created                        pod/load-generator                           Container created
+4m50s       Warning   FailedCreate                   replicaset/registration-service-7757668f5b   Error creating: Unauthorized
+4m50s       Warning   FailedToUpdateEndpoint         endpoints/registration-service               Failed to update endpoint aitu-sss/registration-service: Unauthorized
+4m50s       Warning   FailedToUpdateEndpointSlices   service/registration-service                 Error updating Endpoint Slices for Service aitu-sss/registration-service: failed to update registration-service-hll8g EndpointSlice for Service aitu-sss/registration-service: Unauthorized
+4m50s       Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-jz2nm
+4m50s       Normal    Killing                        pod/registration-service-7757668f5b-pb4q8    Stopping container registration
+4m49s       Warning   FailedPreStopHook              pod/registration-service-7757668f5b-pb4q8    PreStopHook failed
+4m42s       Normal    Killing                        pod/load-generator                           Stopping container curl
+4m18s       Normal    Killing                        pod/registration-service-7757668f5b-jz2nm    Container registration failed liveness probe, will be restarted
+4m18s       Warning   Unhealthy                      pod/registration-service-7757668f5b-jz2nm    Liveness probe failed: Get "http://10.244.1.22:8080/healthz/live": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+4m12s       Warning   Unhealthy                      pod/registration-service-7757668f5b-jz2nm    Readiness probe failed: Get "http://10.244.1.22:8080/healthz/ready": dial tcp 10.244.1.22:8080: connect: connection refused
+4m12s       Normal    Pulled                         pod/registration-service-7757668f5b-jz2nm    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+4m12s       Normal    Started                        pod/registration-service-7757668f5b-jz2nm    Container started
+4m12s       Normal    Created                        pod/registration-service-7757668f5b-jz2nm    Container created
+70s         Normal    SuccessfulCreate               cronjob/registration-db-backup               (combined from similar events): Created job registration-db-backup-29879430
+70s         Normal    Created                        pod/registration-db-backup-29879430-tbpx8    Container created
+70s         Normal    Started                        pod/registration-db-backup-29879430-tbpx8    Container started
+70s         Normal    SuccessfulCreate               job/registration-db-backup-29879430          Created pod: registration-db-backup-29879430-tbpx8
+70s         Normal    Pulled                         pod/registration-db-backup-29879430-tbpx8    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+67s         Normal    Completed                      job/registration-db-backup-29879430          Job completed
+59s         Normal    Created                        pod/load-generator                           Container created
+59s         Normal    Pulled                         pod/load-generator                           Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod
+59s         Normal    Started                        pod/load-generator                           Container started
+53s         Normal    Created                        pod/registration-service-7757668f5b-7qn98    Container created
+53s         Normal    Killing                        pod/registration-service-7757668f5b-jz2nm    Stopping container registration
+53s         Normal    Started                        pod/registration-service-7757668f5b-7qn98    Container started
+53s         Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-7qn98
+53s         Normal    Pulled                         pod/registration-service-7757668f5b-7qn98    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+52s         Warning   FailedPreStopHook              pod/registration-service-7757668f5b-jz2nm    PreStopHook failed
+45s         Normal    Killing                        pod/load-generator                           Stopping container curl
+14s         Normal    Pulled                         pod/load-generator                           Container image "curlimages/curl:8.10.1" already present on machine and can be accessed by the pod
+14s         Normal    Created                        pod/load-generator                           Container created
+14s         Normal    Started                        pod/load-generator                           Container started
+9s          Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-xf4rz
+9s          Normal    Killing                        pod/registration-service-7757668f5b-vqrcd    Stopping container registration
+9s          Normal    SuccessfulCreate               replicaset/registration-service-7757668f5b   Created pod: registration-service-7757668f5b-nnw7f
+9s          Normal    Killing                        pod/registration-service-7757668f5b-7qn98    Stopping container registration
+8s          Normal    Pulled                         pod/registration-service-7757668f5b-nnw7f    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod
+8s          Warning   FailedPreStopHook              pod/registration-service-7757668f5b-vqrcd    PreStopHook failed
+8s          Normal    Created                        pod/registration-service-7757668f5b-nnw7f    Container created
+8s          Normal    Started                        pod/registration-service-7757668f5b-xf4rz    Container started
+8s          Normal    Started                        pod/registration-service-7757668f5b-nnw7f    Container started
+8s          Warning   FailedPreStopHook              pod/registration-service-7757668f5b-7qn98    PreStopHook failed
+8s          Normal    Created                        pod/registration-service-7757668f5b-xf4rz    Container created
+8s          Normal    Pulled                         pod/registration-service-7757668f5b-xf4rz    Container image "aitu-demo/registration-service:1.0.0" already present on machine and can be accessed by the pod

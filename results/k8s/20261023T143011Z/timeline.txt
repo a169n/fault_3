@@ -1,0 +1,6 @@
+2026-10-23T14:30:11.290+00:00 kubectl context: kind-aitu
+2026-10-23T14:30:11.912+00:00 load generator running (5 req/s through the Service)
+2026-10-23T14:30:11.984+00:00 EXPERIMENT 1 begin, pods=['registration-service-7757668f5b-jz2nm', 'registration-service-7757668f5b-vqrcd'], ready endpoints=2
+2026-10-23T14:30:16.988+00:00 FAULT: force delete registration-service-7757668f5b-jz2nm
+2026-10-23T14:30:17.108+00:00 DETECTED after 0.12 s
+2026-10-23T14:30:20.353+00:00 RECOVERED (2 ready endpoints) after 3.37 s
