@@ -57,14 +57,13 @@ kubectl -n aitu-sss get pods -o wide
 bash scripts/k8s/teardown_kind.sh  # delete the cluster (when done)
 ```
 
-Experiments, one file each (run from the repository root):
+Experiments, one file each (shared code in `helpers.py`; run from the repository root):
 
 ```bash
 python3 scripts/k8s/experiments/one_replica.py      # 1 one Registration replica fails
 python3 scripts/k8s/experiments/all_replicas.py     # 2 all Registration replicas fail
 python3 scripts/k8s/experiments/database_down.py    # 3 database down for 60 s (--db-outage N to change)
 python3 scripts/k8s/experiments/liveness_hang.py    # 4 hung process, liveness restarts it
-python3 scripts/k8s/experiments/run_experiments.py  # 1-3 in a row (about 3 minutes)
 ```
 
 Results are saved to `results/k8s/<timestamp>/`: a results table, the load log, events and a timeline.
@@ -98,7 +97,7 @@ kubeconform -strict -summary k8s/*.yaml k8s/tools/*.yaml
 
 ## How the results in `results/` were produced
 
-* Part D was run on a local kind cluster (kind v0.33, Kubernetes v1.37, 1 control plane + 2 workers, Docker Desktop on macOS) with `scripts/k8s/experiments/run_experiments.py --db-outage 60`; experiment 4 with `liveness_hang.py`, log in `liveness_hang.txt`.
+* Part D was run on a local kind cluster (kind v0.33, Kubernetes v1.37, 1 control plane + 2 workers, Docker Desktop on macOS) with the scripts in `scripts/k8s/experiments/` (DB outage 60 s); experiment 4 with `liveness_hang.py`, log in `liveness_hang.txt`.
 * The YAML was validated with `kubeconform` against the Kubernetes 1.31 schemas: 11 resources, 0 errors.
 * The service was tested separately against a real PostgreSQL 16 (`results/postgres_backend_check.log`). When the DB is down, readiness returns 503 while liveness stays 200; when the DB comes back, the connection is re-established automatically.
 * The DR drill was run on a local PostgreSQL 18 (`results/dr_drill.log`).

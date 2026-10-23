@@ -1,0 +1,8 @@
+NAME                                    READY   STATUS      RESTARTS   AGE     IP            NODE           NOMINATED NODE   READINESS GATES
+load-generator                          1/1     Running     0          14s     10.244.1.32   aitu-worker2   <none>           <none>
+postgres-0                              1/1     Running     0          2m22s   10.244.2.54   aitu-worker    <none>           <none>
+registration-db-backup-29879430-tbpx8   0/1     Completed   0          13m     10.244.2.47   aitu-worker    <none>           <none>
+registration-db-backup-29879435-v4tj2   0/1     Completed   0          8m44s   10.244.2.50   aitu-worker    <none>           <none>
+registration-db-backup-29879440-szktt   0/1     Completed   0          3m44s   10.244.2.52   aitu-worker    <none>           <none>
+registration-service-7757668f5b-4wpws   1/1     Running     0          8s      10.244.2.55   aitu-worker    <none>           <none>
+registration-service-7757668f5b-j5spb   1/1     Running     0          3m27s   10.244.1.30   aitu-worker2   <none>           <none>

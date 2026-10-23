@@ -1,0 +1,5 @@
+2026-10-23T14:43:31.256+00:00 load generator running (5 req/s through the Service)
+2026-10-23T14:43:31.362+00:00 EXPERIMENT 1 begin, pods=['registration-service-7757668f5b-7k7l6', 'registration-service-7757668f5b-j5spb'], ready endpoints=2
+2026-10-23T14:43:36.365+00:00 FAULT: force delete registration-service-7757668f5b-7k7l6
+2026-10-23T14:43:36.470+00:00 DETECTED after 0.10 s
+2026-10-23T14:43:39.663+00:00 RECOVERED (2 ready endpoints) after 3.30 s

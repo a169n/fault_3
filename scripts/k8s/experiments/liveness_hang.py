@@ -11,9 +11,8 @@ Output: results/k8s/<timestamp>/liveness_hang.txt
 """
 import os
 import time
-from datetime import datetime, timezone
 
-from cluster import ROOT, kubectl, log, registration_pods
+from helpers import ROOT, TIMELINE, kubectl, log, registration_pods, results_dir, write
 
 HANG = ("import urllib.request as u; "
         "u.urlopen(u.Request('http://localhost:8080/chaos/hang', method='POST'))")
@@ -26,43 +25,29 @@ def restarts_and_ready(pod):
     return (int(out[0]), out[1] == "true") if len(out) == 2 else (-1, False)
 
 
-def main():
-    pod = registration_pods()[0]
-    lines = []
+pod = registration_pods()[0]
+start_restarts, _ = restarts_and_ready(pod)
+log(f"FAULT: POST /chaos/hang on {pod} (restarts before: {start_restarts})")
+kubectl("exec", pod, "--", "python", "-c", HANG)
 
-    def note(msg):
-        log(msg)
-        lines.append(msg)
+t0, restarted = time.time(), None
+while time.time() - t0 < TIMEOUT_S:
+    restarts, ready = restarts_and_ready(pod)
+    log(f"t+{time.time() - t0:.0f}s restarts={restarts} ready={ready}")
+    if restarts > start_restarts and restarted is None:
+        restarted = time.time() - t0
+        log(f"DETECTED: liveness failed, container restarted after ~{restarted:.0f} s")
+    if restarted is not None and ready:
+        log(f"RECOVERED: pod Ready again after ~{time.time() - t0:.0f} s")
+        break
+    time.sleep(3)
+else:
+    log(f"TIMEOUT: no restart within {TIMEOUT_S} s")
 
-    start_restarts, _ = restarts_and_ready(pod)
-    note(f"FAULT: POST /chaos/hang on {pod} (restarts before: {start_restarts})")
-    kubectl("exec", pod, "--", "python", "-c", HANG)
-
-    t0, restarted = time.time(), None
-    while time.time() - t0 < TIMEOUT_S:
-        restarts, ready = restarts_and_ready(pod)
-        note(f"t+{time.time() - t0:.0f}s restarts={restarts} ready={ready}")
-        if restarts > start_restarts and restarted is None:
-            restarted = time.time() - t0
-            note(f"DETECTED: liveness failed, container restarted after ~{restarted:.0f} s")
-        if restarted is not None and ready:
-            note(f"RECOVERED: pod Ready again after ~{time.time() - t0:.0f} s")
-            break
-        time.sleep(3)
-    else:
-        note(f"TIMEOUT: no restart within {TIMEOUT_S} s")
-
-    events = kubectl("get", "events", "--field-selector", f"involvedObject.name={pod}",
-                     "--sort-by=.lastTimestamp", check=False)
-    lines += ["", *[e for e in events.splitlines() if any(k in e for k in ("Liveness", "Killing", "Started"))]]
-
-    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    outdir = os.path.join(ROOT, "results", "k8s", stamp)
-    os.makedirs(outdir, exist_ok=True)
-    with open(os.path.join(outdir, "liveness_hang.txt"), "w") as f:
-        f.write("\n".join(lines) + "\n")
-    print(f"\nSaved to {os.path.relpath(outdir, ROOT)}/liveness_hang.txt")
-
-
-if __name__ == "__main__":
-    main()
+events = kubectl("get", "events", "--field-selector", f"involvedObject.name={pod}",
+                 "--sort-by=.lastTimestamp", check=False)
+lines = [m for _, m in TIMELINE] + [""] + [e for e in events.splitlines()
+                                          if any(k in e for k in ("Liveness", "Killing", "Started"))]
+_, outdir = results_dir()
+write(os.path.join(outdir, "liveness_hang.txt"), "\n".join(lines) + "\n")
+print(f"\nSaved to {os.path.relpath(outdir, ROOT)}/liveness_hang.txt")

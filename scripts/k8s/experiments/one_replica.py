@@ -6,6 +6,12 @@
 One of the two Registration pods is force-deleted. The other replica keeps
 serving; the ReplicaSet creates a replacement. Expected: no failed requests.
 """
-from run_experiments import main
+from helpers import kill_pods, run_experiment
 
-main([1], __doc__)
+
+def inject(pods):
+    kill_pods(pods[:1])  # delete one pod
+
+
+run_experiment(1, "One Registration replica fails", inject,
+               detected=lambda ready: ready < 2, timeout=60)

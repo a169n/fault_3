@@ -21,4 +21,4 @@ kubectl -n aitu-sss rollout status statefulset/postgres --timeout=180s
 kubectl -n aitu-sss rollout status deployment/registration-service --timeout=180s
 kubectl -n aitu-sss get pods -o wide
 echo
-echo "Ready. Next: python3 scripts/k8s/experiments/run_experiments.py --db-outage 60"
+echo "Ready. Next: python3 scripts/k8s/experiments/one_replica.py (or all_replicas.py, database_down.py, liveness_hang.py)"

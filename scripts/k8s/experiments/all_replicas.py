@@ -6,6 +6,12 @@
 Both Registration pods are force-deleted at once. Nobody answers until the
 ReplicaSet's new pods pass readiness. Expected: a short full outage (~1-2 s).
 """
-from run_experiments import main
+from helpers import kill_pods, run_experiment
 
-main([2], __doc__)
+
+def inject(pods):
+    kill_pods(pods)  # delete both pods
+
+
+run_experiment(2, "All Registration replicas fail", inject,
+               detected=lambda ready: ready == 0, timeout=60)
