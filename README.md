@@ -11,7 +11,7 @@ All data, endpoints and credentials are educational and made up.
 | Part A — architecture analysis, diagram | `docs/architecture.png`, table in the report (section 3.1) |
 | Part B — availability calculation | `scripts/availability.py` → `results/availability.md`, reliability block diagram `docs/rbd.png` |
 | Part C — Kubernetes YAML | `k8s/11-registration-deployment.yaml`, `k8s/12-registration-service.yaml`, `k8s/13-registration-pdb.yaml` |
-| Part D — failure experiments | `scripts/k8s/run_experiments.py` on a kind cluster → `results/k8s/<timestamp>/` |
+| Part D — failure experiments | `scripts/k8s/experiments/run_experiments.py` on a kind cluster → `results/k8s/<timestamp>/` |
 | Part E — RPO/RTO and DR | `docs/dr-plan.md`, `k8s/20-db-backup-cronjob.yaml`, `scripts/dr_drill.sh` → `results/dr_drill.log` |
 | Oral defense notes (Russian) | `docs/defense_notes_ru.md` |
 | The service itself | `app/registration_service.py` (start-up, graceful shutdown), `app/config.py` (settings), `app/store.py` (PostgreSQL), `app/handlers.py` (HTTP endpoints); Python standard library + the pure-Python `pg8000` driver; `app/Dockerfile` |
@@ -55,7 +55,7 @@ python3 scripts/availability.py
 brew install kind kubectl          # plus Docker Desktop (or colima: brew install colima docker && colima start)
 bash scripts/k8s/setup_kind.sh     # 3-node cluster, image build, deploy
 kubectl -n aitu-sss get pods -o wide
-python3 scripts/k8s/run_experiments.py --db-outage 60   # experiments 1–3 on the cluster
+python3 scripts/k8s/experiments/run_experiments.py --db-outage 60   # experiments 1–3 on the cluster
 bash scripts/k8s/teardown_kind.sh  # delete the cluster
 ```
 
@@ -97,7 +97,7 @@ kubeconform -strict -summary k8s/*.yaml k8s/tools/*.yaml
 
 ## How the results in `results/` were produced
 
-* Part D was run on a local kind cluster (kind v0.33, Kubernetes v1.37, 1 control plane + 2 workers, Docker Desktop on macOS) with `scripts/k8s/run_experiments.py --db-outage 60`; experiment 4 (liveness) with the commands above, log in `liveness_hang.txt`.
+* Part D was run on a local kind cluster (kind v0.33, Kubernetes v1.37, 1 control plane + 2 workers, Docker Desktop on macOS) with `scripts/k8s/experiments/run_experiments.py --db-outage 60`; experiment 4 (liveness) with the commands above, log in `liveness_hang.txt`.
 * The YAML was validated with `kubeconform` against the Kubernetes 1.31 schemas: 11 resources, 0 errors.
 * The service was tested separately against a real PostgreSQL 16 (`results/postgres_backend_check.log`). When the DB is down, readiness returns 503 while liveness stays 200; when the DB comes back, the connection is re-established automatically.
 * The DR drill was run on a local PostgreSQL 18 (`results/dr_drill.log`).
